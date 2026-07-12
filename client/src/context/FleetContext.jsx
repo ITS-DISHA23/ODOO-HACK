@@ -55,6 +55,7 @@ export const FleetProvider = ({ children }) => {
         status: "In Progress",
     },
 ]);
+  const [fuelLogs, setFuelLogs] = useState([]);
 
   return (
     <FleetContext.Provider
@@ -65,6 +66,8 @@ export const FleetProvider = ({ children }) => {
         setDrivers,
         trips,
         setTrips,
+        fuelLogs,
+        setFuelLogs,
       }}
     >
       {children}

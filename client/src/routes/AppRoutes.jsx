@@ -19,6 +19,7 @@ function AppRoutes() {
         <Route path="/maintenance" element={<Maintenance />} />
         <Route path="/fuel" element={<FuelLogs />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/fuel" element={<FuelLogs />} />
       </Routes>
     </BrowserRouter>
   );
