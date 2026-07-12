@@ -1,27 +1,16 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import API from "../api/vehicleApi";
 
 const FleetContext = createContext();
 
 export const FleetProvider = ({ children }) => {
   // Vehicles
-  const [vehicles, setVehicles] = useState([
-    {
-      id: 1,
-      registration: "OD02AB1234",
-      name: "Tata Ace",
-      type: "Mini Truck",
-      capacity: "1500 kg",
-      status: "Available",
-    },
-    {
-      id: 2,
-      registration: "OD14XY5678",
-      name: "Ashok Leyland",
-      type: "Truck",
-      capacity: "5000 kg",
-      status: "On Trip",
-    },
-  ]);
+  const [vehicles, setVehicles] = useState([]);
 
   // Drivers
   const [drivers, setDrivers] = useState([
@@ -55,9 +44,11 @@ export const FleetProvider = ({ children }) => {
       status: "In Progress",
     },
   ]);
+
+  // Fuel Logs
   const [fuelLogs, setFuelLogs] = useState([]);
 
-  // Maintenance 
+  // Maintenance
   const [maintenance, setMaintenance] = useState([
     {
       id: 1,
@@ -88,6 +79,20 @@ export const FleetProvider = ({ children }) => {
     },
   ]);
 
+  // Fetch vehicles from backend
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
+
+  const fetchVehicles = async () => {
+    try {
+      const res = await API.get("/vehicles");
+      setVehicles(res.data);
+    } catch (err) {
+      console.error("Error fetching vehicles:", err);
+    }
+  };
+
   return (
     <FleetContext.Provider
       value={{
@@ -99,11 +104,14 @@ export const FleetProvider = ({ children }) => {
 
         trips,
         setTrips,
+
         fuelLogs,
         setFuelLogs,
 
         maintenance,
         setMaintenance,
+
+        fetchVehicles,
       }}
     >
       {children}

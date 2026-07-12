@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API from "../api/vehicleApi";
 
 function VehicleForm({
   vehicles,
@@ -18,7 +19,6 @@ function VehicleForm({
 
   const [form, setForm] = useState(emptyForm);
 
-  // Open modal when editing a vehicle
   useEffect(() => {
     if (editingVehicle) {
       setForm(editingVehicle);
@@ -26,7 +26,7 @@ function VehicleForm({
     }
   }, [editingVehicle]);
 
-  const saveVehicle = () => {
+  const saveVehicle = async () => {
     if (
       !form.registration ||
       !form.name ||
@@ -37,29 +37,28 @@ function VehicleForm({
       return;
     }
 
-    // EDIT VEHICLE
-    if (editingVehicle) {
-      const updatedVehicles = vehicles.map((vehicle) =>
-        vehicle.id === editingVehicle.id ? form : vehicle
-      );
+    try {
+      // UPDATE VEHICLE
+      if (editingVehicle) {
+        await API.put(`/vehicles/${editingVehicle.id}`, form);
+        setEditingVehicle(null);
+      }
+      // ADD VEHICLE
+      else {
+        await API.post("/vehicles", form);
+      }
 
-      setVehicles(updatedVehicles);
-      setEditingVehicle(null);
-    }
-    // ADD VEHICLE
-    else {
-      setVehicles([
-        ...vehicles,
-        {
-          id: Date.now(),
-          ...form,
-        },
-      ]);
-    }
+      // Reload vehicles from database
+      const res = await API.get("/vehicles");
+      setVehicles(res.data);
 
-    // Reset Form
-    setForm(emptyForm);
-    setShow(false);
+      // Reset form
+      setForm(emptyForm);
+      setShow(false);
+    } catch (err) {
+      console.error(err);
+      alert("Error saving vehicle.");
+    }
   };
 
   const closeModal = () => {
@@ -79,7 +78,6 @@ function VehicleForm({
 
       {show && (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-
           <div className="bg-white rounded-xl p-6 w-[420px]">
 
             <h2 className="text-xl font-bold mb-4">
@@ -172,7 +170,6 @@ function VehicleForm({
             </div>
 
           </div>
-
         </div>
       )}
     </>
