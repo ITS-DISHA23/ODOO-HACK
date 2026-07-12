@@ -53,7 +53,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
-
+git pull --rebase origin main
 # Package manager lock files (optional)
 # Uncomment if your team uses only one package manager
 # package-lock.json
