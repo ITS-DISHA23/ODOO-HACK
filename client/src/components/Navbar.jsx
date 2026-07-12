@@ -1,58 +1,118 @@
-import { FaBell, FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaBell, FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
 
 function Navbar() {
+
+  const { user, logout } = useAuth();
+
+  const navigate = useNavigate();
+
+
+  const handleLogout = () => {
+
+    logout();
+
+    navigate("/login");
+
+  };
+
+
   return (
-    <header className="bg-white shadow-sm border-b h-16 flex items-center justify-between px-8">
 
-      {/* Left */}
-      <div>
-        <h1 className="text-2xl font-bold text-slate-800">
-          🚛 TransitOps Dashboard
-        </h1>
-      </div>
+    <div className="h-16 bg-white shadow flex items-center justify-between px-6">
 
-      {/* Right */}
+
+      {/* Project Title */}
+
+      <h1 className="text-xl font-bold text-blue-600">
+        TransitOps
+      </h1>
+
+
+
+      {/* Right Side */}
+
       <div className="flex items-center gap-6">
 
-        {/* Search Box */}
-        <div className="relative">
-          <FaSearch className="absolute left-3 top-3 text-gray-400" />
 
-          <input
-            type="text"
-            placeholder="Search..."
-            className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        {/* Search */}
+
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border rounded-lg px-4 py-2 w-64"
+        />
+
+
 
         {/* Notification */}
-        <button className="relative text-2xl text-gray-600 hover:text-blue-600">
+
+        <button className="text-gray-600 text-xl">
+
           <FaBell />
 
-          <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500"></span>
         </button>
 
+
+
+
         {/* User */}
-        <div className="flex items-center gap-3">
 
-          <FaUserCircle className="text-4xl text-blue-600" />
+        {user && (
 
-          <div>
-            <h2 className="font-semibold">
-              Admin
-            </h2>
+          <div className="flex items-center gap-3">
 
-            <p className="text-xs text-gray-500">
-              Fleet Manager
-            </p>
+
+            <FaUserCircle
+              className="text-3xl text-gray-500"
+            />
+
+
+            <div className="text-sm">
+
+              <p className="font-semibold">
+                {user.email}
+              </p>
+
+
+              <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">
+
+                {user.role}
+
+              </span>
+
+            </div>
+
+
+
+            <button
+
+              onClick={handleLogout}
+
+              className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600"
+
+            >
+
+              Logout
+
+            </button>
+
+
           </div>
 
-        </div>
+        )}
+
+
 
       </div>
 
-    </header>
+
+    </div>
+
   );
 }
+
 
 export default Navbar;

@@ -1,15 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import "leaflet/dist/leaflet.css";
 import App from "./App";
+import "./index.css";
 
+import { BrowserRouter } from "react-router-dom";
 import { FleetProvider } from "./context/FleetContext";
+import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <FleetProvider>
-      <App />
-    </FleetProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <FleetProvider>
+          <App />
+        </FleetProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
