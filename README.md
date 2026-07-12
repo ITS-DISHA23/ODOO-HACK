@@ -1,8 +1,8 @@
 # 🚛 TransitOps – Smart Transport Operations Platform
 
-A modern Fleet & Transport Management System that helps organizations efficiently manage vehicles, drivers, trips, fuel records, and operational analytics through an intuitive dashboard.
+A modern **Fleet & Transport Management System** that helps organizations efficiently manage vehicles, drivers, trips, maintenance schedules, fuel records, and operational analytics through an intuitive dashboard.
 
-Built as a full-stack web application with a responsive UI and real-time fleet workflows.
+TransitOps is a **full-stack web application** built with a modern React frontend, Express backend, and SQLite database. It provides secure authentication, real-time fleet workflows, interactive analytics, and centralized transport management.
 
 ---
 
@@ -14,10 +14,11 @@ Managing transport operations manually often leads to:
 - Driver assignment issues
 - Poor fleet visibility
 - Inefficient trip planning
+- Missed maintenance schedules
 - Difficulty tracking fuel expenses
 - Lack of operational analytics
 
-TransitOps provides a centralized platform to streamline transport operations through digital workflows and real-time monitoring.
+TransitOps provides a centralized platform to streamline transport operations through digital workflows, automation, and real-time monitoring.
 
 ---
 
@@ -26,43 +27,59 @@ TransitOps provides a centralized platform to streamline transport operations th
 - Centralize fleet management
 - Improve vehicle utilization
 - Simplify driver management
-- Track trips efficiently
+- Digitize trip assignment workflows
+- Track maintenance history
 - Monitor fuel expenses
-- Provide operational analytics through dashboards
+- Provide operational analytics
+- Secure access using authentication
 
 ---
 
 # 🚀 Features
 
+## 🔐 Authentication
+
+Secure user authentication with backend validation.
+
+### Features
+
+- User Registration
+- Secure Login
+- Session Management
+- Protected Routes
+- Backend Authentication APIs
+
+---
+
 ## 📊 Dashboard
 
-A real-time dashboard providing an overview of fleet operations.
+A real-time dashboard providing a complete overview of fleet operations.
 
 ### KPI Cards
 
-- Total Vehicles
-- Total Drivers
-- Active Trips
-- Available Vehicles
+- 🚚 Total Vehicles
+- 👨‍✈️ Total Drivers
+- 🛣 Active Trips
+- ✅ Available Vehicles
 
-### Analytics
+### Interactive Analytics
 
 - Vehicle Status Pie Chart
 - Trip Analytics Bar Chart
 
 ### Fleet Map
 
-- Interactive fleet map using Leaflet
-- Displays vehicle locations
-- Vehicle information popup
+- Interactive OpenStreetMap
+- Live Vehicle Locations
+- Vehicle Status Popups
 
 ---
 
 ## 🚚 Vehicle Management
 
-Manage the complete fleet with CRUD operations.
+Manage the complete fleet with full CRUD functionality.
 
-Features:
+### Features
 
 - Add Vehicle
 - Edit Vehicle
@@ -70,7 +87,7 @@ Features:
 - Search Vehicles
 - Filter by Status
 
-Vehicle Status:
+### Vehicle Status
 
 - Available
 - On Trip
@@ -82,7 +99,7 @@ Vehicle Status:
 
 Manage driver information and availability.
 
-Features:
+### Features
 
 - Add Driver
 - Edit Driver
@@ -90,7 +107,7 @@ Features:
 - Search Drivers
 - Filter by Status
 
-Driver Status:
+### Driver Status
 
 - Available
 - Assigned
@@ -100,17 +117,18 @@ Driver Status:
 
 ## 🛣 Trip Management
 
-Assign vehicles and drivers to trips.
+Assign vehicles and drivers to transportation trips.
 
-Features:
+### Features
 
 - Create Trip
 - Assign Available Vehicle
 - Assign Available Driver
 - Complete Trip
 
-Automatic Workflow:
+### Automatic Workflow
 
+```
 Available Vehicle
         ↓
 Assign Trip
@@ -124,20 +142,55 @@ Complete Trip
 Vehicle → Available
 
 Driver → Available
+```
 
-Business Validations:
+### Business Validations
 
-- Only available vehicles can be assigned
-- Only available drivers can be assigned
-- Status updates automatically after trip assignment and completion
+- Only available vehicles can be assigned.
+- Only available drivers can be assigned.
+- Vehicle and driver status update automatically.
+- Vehicles under maintenance cannot be assigned.
+
+---
+
+## 🔧 Maintenance Management
+
+Manage vehicle servicing and maintenance records.
+
+### Features
+
+- Create Maintenance Request
+- Update Maintenance Status
+- View Maintenance Records
+- Complete Maintenance
+- Delete Maintenance Record
+
+### Workflow
+
+```
+Vehicle Available
+        ↓
+Maintenance Created
+        ↓
+Vehicle → Maintenance
+
+Maintenance Completed
+        ↓
+Vehicle → Available
+```
+
+### Business Rules
+
+- Vehicles under maintenance cannot be assigned to trips.
+- Completing maintenance automatically restores vehicle availability.
 
 ---
 
 ## ⛽ Fuel Logs
 
-Track vehicle fuel usage.
+Track vehicle fuel usage and expenses.
 
-Features:
+### Features
 
 - Add Fuel Log
 - Select Vehicle
@@ -153,31 +206,41 @@ Features:
 
 ## 📈 Reports & Analytics
 
-Management dashboard for operational insights.
+Generate operational summaries and business insights.
 
-Includes:
+### Includes
 
 - Fleet Summary
-- Vehicle Count
-- Driver Count
+- Vehicle Statistics
+- Driver Statistics
 - Trip Statistics
 - Fuel Expense Summary
-- Print Report
+- Print Reports
 
 ---
 
 # 📌 Business Rules
 
-✔ Vehicle registration number should be unique.
+✔ Vehicle registration number must be unique.
 
 ✔ Only available vehicles can be assigned to trips.
 
 ✔ Only available drivers can be assigned to trips.
 
-✔ Completing a trip automatically updates:
+✔ Vehicles under maintenance cannot be assigned.
+
+✔ Completing a trip automatically changes:
 
 - Vehicle → Available
 - Driver → Available
+
+✔ Creating maintenance automatically changes:
+
+- Vehicle → Maintenance
+
+✔ Completing maintenance automatically changes:
+
+- Vehicle → Available
 
 ✔ Fuel logs require:
 
@@ -195,69 +258,129 @@ Includes:
 ```
 TransitOps
 │
+├── Authentication
 ├── Dashboard
-├── Vehicles
-├── Drivers
-├── Trips
+├── Vehicle Management
+├── Driver Management
+├── Trip Management
+├── Maintenance Management
 ├── Fuel Logs
-├── Reports
+├── Reports & Analytics
+├── Fleet Map
+├── Backend API
+└── Database
 ```
 
 ---
 
-# 🛠 Tech Stack
+# 🏗️ System Architecture
 
-### Frontend
+```
+                React + Vite
+                      │
+                      │ REST APIs
+                      ▼
+             Node.js + Express.js
+                      │
+                      ▼
+                SQLite Database
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
 
 - React.js
 - Vite
 - Tailwind CSS
-- React Router
+- React Router DOM
 - React Icons
 
-### Data Visualization
+## Backend
+
+- Node.js
+- Express.js
+
+## Database
+
+- SQLite
+
+## Data Visualization
 
 - Chart.js
 - React ChartJS 2
 
-### Maps
+## Maps
 
 - React Leaflet
 - OpenStreetMap
 
-### State Management
+## State Management
 
 - React Context API
 
 ---
 
-# 📷 Screens
+# 🔄 System Workflow
 
-- Dashboard
-- Vehicle Management
-- Driver Management
-- Trip Management
-- Fuel Logs
-- Reports
-- Fleet Map
+```
+User Login
+      ↓
+Dashboard
+      ↓
+Manage Vehicles
+      ↓
+Manage Drivers
+      ↓
+Assign Trips
+      ↓
+Track Maintenance
+      ↓
+Track Fuel Logs
+      ↓
+Generate Reports
+```
+
+---
+
+# 📷 Application Screens
+
+- 🔐 Login Page
+- 📊 Dashboard
+- 🚚 Vehicle Management
+- 👨‍✈️ Driver Management
+- 🛣 Trip Management
+- 🔧 Maintenance Management
+- ⛽ Fuel Logs
+- 📈 Reports & Analytics
+- 🗺 Fleet Map
 
 ---
 
 # 🌟 Future Enhancements
 
-- Express.js Backend API
-- PostgreSQL Database
-- Authentication & Role-Based Access
-- Maintenance Management
+- Role-Based Access Control (Admin, Fleet Manager, Driver)
+- PostgreSQL Integration
 - GPS Live Vehicle Tracking
-- Predictive Maintenance
-- Email Notifications
-- Export Reports to CSV/PDF
+- Route Optimization
+- AI-Based Predictive Maintenance
+- Fuel Consumption Prediction
+- Email & SMS Notifications
+- Export Reports to PDF
+- QR Code Vehicle Identification
+- Dark Mode
+- Mobile Application
 
 ---
 
 # 👥 Team
 
-**Team Name:** TrackWise
+## Team Name
 
-Built during the Odoo Hackathon to demonstrate a modern fleet management system with responsive UI, operational workflows, analytics, and interactive visualization.
+**TrackWise**
+
+---
+
+Built during **Odoo Hackathon 2026** as a modern full-stack Fleet Management System featuring secure authentication, Express backend APIs, SQLite database integration, interactive dashboards, fleet visualization, maintenance management, fuel tracking, and operational analytics.
