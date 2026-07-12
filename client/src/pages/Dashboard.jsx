@@ -5,11 +5,12 @@ import FleetMap from "../components/FleetMap";
 import VehicleChart from "../components/VehicleChart";
 import TripChart from "../components/TripChart";
 
-
 function Dashboard() {
-  const { vehicles, drivers, trips } = useFleet();
+  const { vehicles, drivers, trips, maintenance } = useFleet();
 
+  // Vehicle Stats
   const totalVehicles = vehicles.length;
+
   const availableVehicles = vehicles.filter(
     (v) => v.status === "Available"
   ).length;
@@ -18,10 +19,20 @@ function Dashboard() {
     (v) => v.status === "On Trip"
   ).length;
 
-  const maintenanceVehicles = vehicles.filter(
-    (v) => v.status === "Maintenance"
+  // Maintenance Stats
+  const pendingMaintenance = maintenance.filter(
+    (m) => m.status === "Pending"
   ).length;
 
+  const completedMaintenance = maintenance.filter(
+    (m) => m.status === "Completed"
+  ).length;
+
+  const overdueMaintenance = maintenance.filter(
+    (m) => m.status === "Overdue"
+  ).length;
+
+  // Driver Stats
   const totalDrivers = drivers.length;
 
   const availableDrivers = drivers.filter(
@@ -32,6 +43,7 @@ function Dashboard() {
     (d) => d.status === "Assigned"
   ).length;
 
+  // Trip Stats
   const activeTrips = trips.filter(
     (t) => t.status === "In Progress"
   ).length;
@@ -48,7 +60,7 @@ function Dashboard() {
           Dashboard
         </h1>
 
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
           <StatCard
             title="Total Vehicles"
@@ -66,8 +78,8 @@ function Dashboard() {
           />
 
           <StatCard
-            title="Maintenance"
-            value={maintenanceVehicles}
+            title="Pending Maintenance"
+            value={pendingMaintenance}
           />
 
           <StatCard
@@ -104,22 +116,32 @@ function Dashboard() {
 
             <p>🔵 Vehicles On Trip : {onTripVehicles}</p>
 
-            <p>🔴 Under Maintenance : {maintenanceVehicles}</p>
+            <p>🟡 Pending Maintenance : {pendingMaintenance}</p>
+
+            <p>✅ Completed Maintenance : {completedMaintenance}</p>
+
+            <p>🔴 Overdue Maintenance : {overdueMaintenance}</p>
 
             <p>👨 Available Drivers : {availableDrivers}</p>
 
             <p>🚚 Active Trips : {activeTrips}</p>
 
-            <p>✅ Completed Trips : {completedTrips}</p>
+            <p>✔️ Completed Trips : {completedTrips}</p>
 
           </div>
 
         </div>
+
         <div className="grid md:grid-cols-2 gap-6 mt-8">
-           <VehicleChart />
-           <TripChart />
+
+          <VehicleChart />
+
+          <TripChart />
+
         </div>
-      <FleetMap />
+
+        <FleetMap />
+
       </div>
     </DashboardLayout>
   );

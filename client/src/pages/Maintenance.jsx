@@ -3,6 +3,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import StatCard from "../components/StatCard";
 import MaintenanceTable from "../components/MaintenanceTable";
 import MaintenanceForm from "../components/MaintenanceForm";
+import { useFleet } from "../context/FleetContext";
 
 import {
   FaTools,
@@ -12,37 +13,9 @@ import {
 } from "react-icons/fa";
 
 function Maintenance() {
-  const initialMaintenance = [
-    {
-      id: 1,
-      vehicle: "Truck-101",
-      service: "Oil Change",
-      mechanic: "Raj Motors",
-      dueDate: "2026-07-20",
-      cost: "4500",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      vehicle: "Bus-204",
-      service: "Brake Inspection",
-      mechanic: "AutoCare",
-      dueDate: "2026-07-10",
-      cost: "7200",
-      status: "Completed",
-    },
-    {
-      id: 3,
-      vehicle: "Van-305",
-      service: "Engine Service",
-      mechanic: "Speed Garage",
-      dueDate: "2026-07-05",
-      cost: "14800",
-      status: "Overdue",
-    },
-  ];
+  // Get maintenance data from FleetContext
+  const { maintenance, setMaintenance } = useFleet();
 
-  const [maintenance, setMaintenance] = useState(initialMaintenance);
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
 
@@ -72,19 +45,19 @@ function Maintenance() {
 
           <StatCard
             title="Pending"
-            value={maintenance.filter(m => m.status === "Pending").length}
+            value={maintenance.filter((m) => m.status === "Pending").length}
             icon={<FaClock />}
           />
 
           <StatCard
             title="Completed"
-            value={maintenance.filter(m => m.status === "Completed").length}
+            value={maintenance.filter((m) => m.status === "Completed").length}
             icon={<FaCheckCircle />}
           />
 
           <StatCard
             title="Overdue"
-            value={maintenance.filter(m => m.status === "Overdue").length}
+            value={maintenance.filter((m) => m.status === "Overdue").length}
             icon={<FaExclamationTriangle />}
           />
 
