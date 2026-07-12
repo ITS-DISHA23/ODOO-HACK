@@ -1,10 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import "./index.css";
+
+import App from "./App";
+
+import { FleetProvider } from "./context/FleetContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <FleetProvider>
+      <App />
+    </FleetProvider>
   </React.StrictMode>
 );

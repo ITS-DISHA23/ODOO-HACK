@@ -2,26 +2,9 @@ import { useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import VehicleTable from "../components/VehicleTable";
 import VehicleForm from "../components/VehicleForm";
-
+import { useFleet } from "../context/FleetContext";
 function Vehicles() {
-  const [vehicles, setVehicles] = useState([
-    {
-      id: 1,
-      registration: "OD02AB1234",
-      name: "Tata Ace",
-      type: "Mini Truck",
-      capacity: "1500 kg",
-      status: "Available",
-    },
-    {
-      id: 2,
-      registration: "OD14XY5678",
-      name: "Ashok Leyland",
-      type: "Truck",
-      capacity: "5000 kg",
-      status: "On Trip",
-    },
-  ]);
+  const { vehicles, setVehicles } = useFleet();
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
